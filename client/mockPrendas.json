@@ -1,0 +1,14 @@
+{
+    "status" : "OK",
+    "prendas" : [
+        { "prenda": "Remera", "marca": "Nike", "precio": 2500, "talle": "S" },
+        { "prenda": "Short", "marca": "Adidas", "precio": 2700, "talle": "L" },
+        { "prenda": "Campera", "marca": "Puma", "precio": 2250, "talle": "XL" },
+        { "prenda": "Musculosa", "marca": "Reebok", "precio": 2100, "talle": "M" },
+        { "prenda": "Jean", "marca": "Legacy", "precio": 8500, "talle": "S" },
+        { "prenda": "Camisa", "marca": "Kevingston", "precio": 5200, "talle": "L" },
+        { "prenda": "Pantalon", "marca": "Levis", "precio": 9800, "talle": "XL" },
+        { "prenda": "Chomba", "marca": "Kevingston", "precio": 11700, "talle": "M" },
+        { "prenda": "Cinto", "marca": "Kevingston", "precio": 4500, "talle": "M" }
+    ]
+}

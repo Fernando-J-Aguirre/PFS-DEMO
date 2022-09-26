@@ -8,7 +8,7 @@ export class IndumentariaService {
 
     public getPrendas(): any {
         this.listaPrendas = [];
-        let indumentaria: Indumentaria;
+        let indumentaria: Indumentaria; 
         let prendasJson = [
             { prenda: "Remera", marca: "Nike", precio: 2500, talle: "S", tipo: "Deportiva" },
             { prenda: "Short", marca: "Adidas", precio: 2700, talle: "L", tipo: "Deportiva" },

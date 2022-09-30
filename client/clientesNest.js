@@ -44,13 +44,6 @@ function mostrar() {
 
 btnAgregar.addEventListener('click', agregar)
 
-// btnEliminar.addEventListener('click', () => {
-//     while (tbody.firstChild) {                    
-//         tbody.removeChild(tbody.firstChild);      
-//     }
-//     clientes = [];
-// })
-
 async function load() {
     let respuesta = await fetch('/cliente');
     if (respuesta.ok) {

@@ -3,12 +3,14 @@
 let tbody = document.getElementById('tbody');
 
 let btnAgregar = document.getElementById('btnAgregar');
-// let btnEliminar = document.getElementById('btnEliminar');
+let btnBuscar = document.getElementById('btnBuscar');
+
 
 let prendas = [];
 load();
 
 function agregar() {
+    let id = document.getElementById('id').value;
     let prenda = document.getElementById('prenda').value;
     let marca = document.getElementById('marca').value;
     let precio = document.getElementById('precio').value;
@@ -16,6 +18,7 @@ function agregar() {
     let tipo = document.getElementById('tipo').value;
 
     let fila = {
+         id: id,
          prenda: prenda,
          marca: marca,
          precio: precio,
@@ -24,6 +27,7 @@ function agregar() {
     };
     prendas.push(fila);
     mostrar();
+    id = document.getElementById('id').value = "";
     prenda = document.getElementById('prenda').value = "";
     marca = document.getElementById('marca').value = "";
     precio = document.getElementById('precio').value = "";
@@ -36,10 +40,11 @@ function mostrar() {
     for (let r of prendas) {
         html += `
             <tr>
+            <td>${r.id}</td>
             <td>${r.prenda}</td>
             <td>${r.marca}</td>
             <td>$${r.precio}</td>
-            <td>${r.talle}</td>
+            <td>${r.talle.toUpperCase()}</td>
             <td>${r.tipo}</td>
         `;
     }
@@ -48,18 +53,40 @@ function mostrar() {
 
 btnAgregar.addEventListener('click', agregar)
 
-// btnEliminar.addEventListener('click', () => {
-//     while (tbody.firstChild) {                    
-//         tbody.removeChild(tbody.firstChild);      
-//     }
-//     prendas = [];
-// })
-
-async function load() {
-    let respuesta = await fetch('/indumentaria');
-    if (respuesta.ok) {
-        prendas = await respuesta.json()
-        mostrar();
+btnBuscar.addEventListener('click', () => {
+    let id = parseInt(document.getElementById('id').value);
+    if(id) {
+        load(id);
     }
+    document.getElementById('id').value = "";
+})
+
+async function load(identificador) {
+    prendas = [];
+    let url = "";
+    if (identificador) 
+        url = `/indumentaria/${identificador}`;
+    else
+        url = '/indumentaria';
+    let respuesta = await fetch(url);
+    if (respuesta.ok) {
+        if (identificador)
+            prendas.push(await respuesta.json());
+        else
+            prendas = await respuesta.json();
+    }
+    mostrar();
 }
+
+
+
+
+
+// async function load() {
+//     let respuesta = await fetch('/indumentaria');
+//     if (respuesta.ok) {
+//         prendas = await respuesta.json()
+//         mostrar();
+//     }
+// }
 

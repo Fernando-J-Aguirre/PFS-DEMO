@@ -1,14 +1,17 @@
 import ErrorControlado from "./errorControlado";
 
 export default class Indumentaria {
+    private id: number; 
     private prenda: string; 
     private marca: string;
     private precio: number;
     private talle: string;
     private tipo: string;
 
-    constructor(prenda: string, marca: string, precio: number, talle: string, tipo: string) {
+    constructor(id: number, prenda: string, marca: string, precio: number, talle: string, tipo: string) {
         try {
+            if(!id && id <= 0) throw new ErrorControlado('El id no puede ser menor o igual a 0');
+            this.id = id;
             if (prenda.trim() == "") throw new ErrorControlado('La prenda no puede estar vacio');
             this.prenda = prenda.trim();
             if (marca.trim() == "") throw new ErrorControlado('La marca no puede estar vacia');
@@ -26,6 +29,21 @@ export default class Indumentaria {
         } catch (error) {
             console.log(`Ocurrio un ${error.name}: ${error.message}`);
         }
+    }
+
+    public getId(): number {
+        return this.id;
+    }
+
+    public setId(id: number) {
+        try {
+            if (isNaN(id)) throw new ErrorControlado('El id debe ser un numero');
+            if (id <= 0) throw new ErrorControlado('El id no se puede cambiar a un valor menor o igual a 0');
+        } catch (error) {
+            console.log(`Ocurrio un ${error.name}: ${error.message}`);
+        }
+        this.id = id;
+
     }
 
     public getPrenda(): string {

@@ -9,8 +9,34 @@ let btnBuscar = document.getElementById('btnBuscar');
 let prendas = [];
 load();
 
-function agregar() {
-    let id = document.getElementById('id').value;
+// function agregar() {
+//     let id = document.getElementById('id').value;
+//     let prenda = document.getElementById('prenda').value;
+//     let marca = document.getElementById('marca').value;
+//     let precio = document.getElementById('precio').value;
+//     let talle = document.getElementById('talle').value;
+//     let tipo = document.getElementById('tipo').value;
+
+//     let fila = {
+//          id: id,
+//          prenda: prenda,
+//          marca: marca,
+//          precio: precio,
+//          talle: talle,
+//          tipo: tipo,
+//     };
+//     prendas.push(fila);
+//     mostrar();
+//     id = document.getElementById('id').value = "";
+//     prenda = document.getElementById('prenda').value = "";
+//     marca = document.getElementById('marca').value = "";
+//     precio = document.getElementById('precio').value = "";
+//     talle = document.getElementById('talle').value = "";
+//     tipo = document.getElementById('tipo').value = "";
+// }
+
+btnAgregar.addEventListener("click", async () => {
+    let id = document.getElementById('id').value;   
     let prenda = document.getElementById('prenda').value;
     let marca = document.getElementById('marca').value;
     let precio = document.getElementById('precio').value;
@@ -18,22 +44,23 @@ function agregar() {
     let tipo = document.getElementById('tipo').value;
 
     let fila = {
-         id: id,
-         prenda: prenda,
-         marca: marca,
-         precio: precio,
-         talle: talle,
-         tipo: tipo,
+        id: id,
+        prenda: prenda,
+        marca: marca,
+        precio: precio,
+        talle: talle,
+        tipo: tipo,
     };
-    prendas.push(fila);
-    mostrar();
+    if (await aServidor(fila, 'A')) {
+        load();
+    }
     id = document.getElementById('id').value = "";
     prenda = document.getElementById('prenda').value = "";
     marca = document.getElementById('marca').value = "";
     precio = document.getElementById('precio').value = "";
     talle = document.getElementById('talle').value = "";
     tipo = document.getElementById('tipo').value = "";
-}
+});
 
 function mostrar() {
     let html = "";
@@ -55,7 +82,7 @@ btnAgregar.addEventListener('click', agregar)
 
 btnBuscar.addEventListener('click', () => {
     let id = parseInt(document.getElementById('id').value);
-    if(id) {
+    if (id) {
         load(id);
     }
     document.getElementById('id').value = "";
@@ -64,7 +91,7 @@ btnBuscar.addEventListener('click', () => {
 async function load(identificador) {
     prendas = [];
     let url = "";
-    if (identificador) 
+    if (identificador)
         url = `/indumentaria/${identificador}`;
     else
         url = '/indumentaria';
@@ -76,6 +103,20 @@ async function load(identificador) {
             prendas = await respuesta.json();
     }
     mostrar();
+}
+
+async function aServidor(datos, accion) {
+    let respuesta;
+    switch (accion) {
+        case 'A': {     //ALTA
+            respuesta = await fetch('/indumentaria', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(datos)
+            });
+        }
+    }
+    return ((await respuesta.text()) == "ok");
 }
 
 

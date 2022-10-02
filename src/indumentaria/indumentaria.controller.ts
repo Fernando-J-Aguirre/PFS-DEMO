@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import Indumentaria from './indumentaria';
 import { IndumentariaService } from './indumentaria.service';
 
@@ -14,4 +14,9 @@ export class IndumentariaController {
     public getPrenda(@Param('identificador') id: number) : Indumentaria {
         return this.indumentariaService.getPrenda(id);
     }
+    @Post()
+    public addPrenda(@Body() prenda : any) : string {
+        return this.indumentariaService.addPrenda(prenda);
+    }
+    
 }

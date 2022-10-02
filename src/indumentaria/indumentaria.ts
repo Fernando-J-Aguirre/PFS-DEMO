@@ -10,7 +10,7 @@ export default class Indumentaria {
 
     constructor(id: number, prenda: string, marca: string, precio: number, talle: string, tipo: string) {
         try {
-            if(!id && id <= 0) throw new ErrorControlado('El id no puede ser menor o igual a 0');
+            if(id <= 0) throw new ErrorControlado('El id no puede ser menor o igual a 0');
             this.id = id;
             if (prenda.trim() == "") throw new ErrorControlado('La prenda no puede estar vacio');
             this.prenda = prenda.trim();

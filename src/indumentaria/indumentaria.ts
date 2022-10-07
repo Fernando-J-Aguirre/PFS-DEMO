@@ -43,7 +43,6 @@ export default class Indumentaria {
             console.log(`Ocurrio un ${error.name}: ${error.message}`);
         }
         this.id = id;
-
     }
 
     public getPrenda(): string {
@@ -114,6 +113,12 @@ export default class Indumentaria {
             console.log(`Ocurrio un ${error.name}: ${error.message}`);
         }
         this.tipo = tipo;
+    }
+
+    public guardar(): string {
+        let datos: string;
+        datos = `${this.getId()},${this.getPrenda()},${this.getMarca()},${this.getPrecio()},${this.getTalle()},${this.getTipo()}`;
+        return datos;
     }
 
 }

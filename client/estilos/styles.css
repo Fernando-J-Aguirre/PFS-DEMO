@@ -48,11 +48,11 @@ input {
     border-radius: 5px;
 }
 
-.container {
+.container, p {
     margin: 15px 50px;    
 }
 
-.container button {
+.container button, p, .btnDelPrenda, .btnUpdPrenda {
     font-size: 18px;
     padding: 10px;
     border-radius: 10px;

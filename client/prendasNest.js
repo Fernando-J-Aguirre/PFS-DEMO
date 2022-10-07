@@ -3,7 +3,8 @@
 let tbody = document.getElementById('tbody');
 
 let btnAgregar = document.getElementById('btnAgregar');
-let btnBuscar = document.getElementById('btnBuscar');
+let btnBuscarId = document.getElementById('btnBuscarId');
+// let btnBuscarTipo = document.getElementById('btnBuscarTipo');
 
 
 let prendas = [];
@@ -34,9 +35,10 @@ load();
 //     talle = document.getElementById('talle').value = "";
 //     tipo = document.getElementById('tipo').value = "";
 // }
+// btnAgregar.addEventListener('click', agregar)
 
 btnAgregar.addEventListener("click", async () => {
-    let id = document.getElementById('id').value;   
+    let id = document.getElementById('id').value;
     let prenda = document.getElementById('prenda').value;
     let marca = document.getElementById('marca').value;
     let precio = document.getElementById('precio').value;
@@ -67,20 +69,19 @@ function mostrar() {
     for (let r of prendas) {
         html += `
             <tr>
-            <td>${r.id}</td>
+            <td><a href="./ejemploPrenda.html?id=${r.id}">${r.id}</a></td>
             <td>${r.prenda}</td>
             <td>${r.marca}</td>
             <td>$${r.precio}</td>
-            <td>${r.talle.toUpperCase()}</td>
+            <td>${r.talle}</td>
             <td>${r.tipo}</td>
         `;
     }
     tbody.innerHTML = html;
 }
 
-btnAgregar.addEventListener('click', agregar)
 
-btnBuscar.addEventListener('click', () => {
+btnBuscarId.addEventListener('click', () => {
     let id = parseInt(document.getElementById('id').value);
     if (id) {
         load(id);
@@ -105,6 +106,26 @@ async function load(identificador) {
     mostrar();
 }
 
+// async function load(param) {
+//     prendas = [];
+//     let url = "";
+//     if (typeof param === 'number') {
+//         url = `/indumentaria/${param}`;
+//     } else if (typeof param === 'string') {
+//         url = `/indumentaria/tipo/${param}`;
+//     } else {
+//         url = '/indumentaria';
+//     }
+//     let respuesta = await fetch(url);
+//     if (respuesta.ok) {
+//         if (param)
+//             prendas.push(await respuesta.json());
+//         else
+//             prendas = await respuesta.json();
+//     }
+//     mostrar()
+// }
+
 async function aServidor(datos, accion) {
     let respuesta;
     switch (accion) {
@@ -114,20 +135,22 @@ async function aServidor(datos, accion) {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(datos)
             });
+            break;
+        }
+        case 'D' : {     //DELETE
+            respuesta = await fetch(`/indumentaria/${id}`, {
+                method: 'DELETE'
+            });
+            break;
+        }
+        case 'U': {      //ACTUALIZACIÓN
+            respuesta = await fetch(`/indumentaria/${datos.prendas[0].id}`, {
+                method: 'PUT',
+                headers: {'Content-type' : 'application/json'},
+                body: JSON.stringify(datos)
+            });
+            break;
         }
     }
     return ((await respuesta.text()) == "ok");
 }
-
-
-
-
-
-// async function load() {
-//     let respuesta = await fetch('/indumentaria');
-//     if (respuesta.ok) {
-//         prendas = await respuesta.json()
-//         mostrar();
-//     }
-// }
-

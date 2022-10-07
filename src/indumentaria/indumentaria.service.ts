@@ -51,16 +51,56 @@ export class IndumentariaService {
         }
     }
 
+    public getPrendasXTipo(tipo: string): Indumentaria[] {
+        let listaPrendas: Indumentaria[] = [];
+        this.listaPrendas.forEach(element => {
+            if (element.getTipo() == tipo) {  
+                listaPrendas.push(element);
+            }
+        })
+        return listaPrendas;
+    }
+
     public addPrenda(prendaNueva: any): string {
-        let prenda = new Indumentaria(prendaNueva.id,prendaNueva.prenda,prendaNueva.marca,prendaNueva.precio,prendaNueva.talle,prendaNueva.tipo);
+        let prenda = new Indumentaria(prendaNueva.id, prendaNueva.prenda, prendaNueva.marca, prendaNueva.precio, prendaNueva.talle, prendaNueva.tipo);
         if (prenda.getId() && prenda.getPrenda() && prenda.getMarca() && prenda.getPrecio() && prenda.getTalle() && prenda.getTipo()) {
             this.listaPrendas.push(prenda);
             this.savePrendas();
             this.loadPrendas();
             return 'ok';
-        } else {
+        } else {     
             return 'Parametros incorrectos'
         }
+    }
+
+    public delPrenda(id: number): string {
+        for(let i = 0; i < this.listaPrendas.length; i++) {
+            if(this.listaPrendas[i].getId()==id) {
+                this.listaPrendas.splice(i,1);
+                this.savePrendas();
+                this.loadPrendas();
+                return 'ok';
+            }
+        }
+        return 'No se encuentra el id';
+    } 
+
+    public modificarPrendas(id: number, datos: any): string {
+        for (let i = 0; i < this.listaPrendas.length; i++) {
+            if(this.listaPrendas[i].getId() == id) {
+                let indumentaria: Indumentaria;
+                let cantidad = datos.cantidad;              
+                for(let j = 0; j < cantidad; j++) {
+                    let prenda = datos.listaPrendas[j];
+                    indumentaria = new Indumentaria(prenda.id, prenda.prenda, prenda.marca, prenda.precio, prenda.talle, prenda.tipo);
+                }
+                this.listaPrendas[i] = indumentaria;
+                this.savePrendas();
+                this.loadPrendas();
+                return 'ok';
+            }
+        }
+        return 'No se encuentra id';
     }
 
     ///////////////////
@@ -89,17 +129,3 @@ export class IndumentariaService {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

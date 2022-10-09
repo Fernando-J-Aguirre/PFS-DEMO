@@ -54,7 +54,7 @@ export class IndumentariaService {
     public getPrendasXTipo(tipo: string): Indumentaria[] {
         let listaPrendas: Indumentaria[] = [];
         this.listaPrendas.forEach(element => {
-            if (element.getTipo() == tipo) {  
+            if (element.getTipo() == tipo) {
                 listaPrendas.push(element);
             }
         })
@@ -68,30 +68,31 @@ export class IndumentariaService {
             this.savePrendas();
             this.loadPrendas();
             return 'ok';
-        } else {     
+        } else {
             return 'Parametros incorrectos'
         }
     }
 
     public delPrenda(id: number): string {
-        for(let i = 0; i < this.listaPrendas.length; i++) {
-            if(this.listaPrendas[i].getId()==id) {
-                this.listaPrendas.splice(i,1);
+        for (let i = 0; i < this.listaPrendas.length; i++) {
+            if (this.listaPrendas[i].getId() == id) {
+                this.listaPrendas.splice(i, 1);
                 this.savePrendas();
                 this.loadPrendas();
                 return 'ok';
             }
         }
         return 'No se encuentra el id';
-    } 
+    }
 
     public modificarPrendas(id: number, datos: any): string {
         for (let i = 0; i < this.listaPrendas.length; i++) {
-            if(this.listaPrendas[i].getId() == id) {
+            if (this.listaPrendas[i].getId() == id) {
                 let indumentaria: Indumentaria;
-                let cantidad = datos.cantidad;              
-                for(let j = 0; j < cantidad; j++) {
-                    let prenda = datos.listaPrendas[j];
+                let cantidad = datos.cantidad;
+                for (let j = 0; j < cantidad; j++) {
+                    let prenda = datos.prendas[j]; /*Este datos.prendas[j], más específicamente, "prendas" es el dato enviado desde 
+                    el renglón creado en ejemploPrenda.js - por ende tiene que tener ese nombre */
                     indumentaria = new Indumentaria(prenda.id, prenda.prenda, prenda.marca, prenda.precio, prenda.talle, prenda.tipo);
                 }
                 this.listaPrendas[i] = indumentaria;
@@ -119,7 +120,7 @@ export class IndumentariaService {
         }
     }
 
-    private savePrendas() {
+    private savePrendas() { 
         FS.writeFileSync('C:\\PFS2022\\4-BE\\pfs-demo\\src\\indumentaria\\prendasMock.txt', '');
         for (let i = 0; i < this.listaPrendas.length; i++) {
             let prenda = this.listaPrendas[i];

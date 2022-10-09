@@ -30,6 +30,7 @@ export class IndumentariaController {
     public delPrenda(@Param('id') id: number): string {
         return this.indumentariaService.delPrenda(id);
     }
+    
     @Put('/:id')
     public modificarPrendas(@Param('id') id : number, @Body() datos : any) : string {
         return this.indumentariaService.modificarPrendas(id, datos);

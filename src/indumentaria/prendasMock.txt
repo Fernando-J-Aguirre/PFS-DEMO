@@ -1,9 +1,9 @@
-1,Remera,Nike,2500,S,Deportiva
-2,Short,Adidas,2700,L,Deportiva
-3,Campera,Puma,2250,XL,Casual
-4,Musculosa,Reebok,2100,M,Deportiva
+1,Remera,Nike,7900,S,Deportiva
+2,Short,Adidas,5000,L,Deportiva
+3,Campera,Puma,15350,XL,Casual
+4,Musculosa,Reebok,4600,M,Deportiva
 5,Jean,Legacy,8500,S,Clasica
-6,Camisa,Kevingston,5200,L,Elegante
-7,Pantalon,Levis,9800,XL,Elegante
+6,Camisa,Kevingston,15200,L,Elegante
+7,Pantalon,Levis,13800,XL,Elegante
 8,Chomba,Kevingston,11700,M,Casual
 9,Cinto,Kevingston,4500,M,Elegante

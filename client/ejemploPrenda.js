@@ -1,5 +1,4 @@
 let titulo = document.querySelector(".titulo");
-// pSubtitulo.innerHTML="Ejemplo Concesionaria - un prenda";
 
 let parametros = [];
 function procesarParametros() {
@@ -23,7 +22,7 @@ async function load() {
         let respuesta = await fetch(url);
         if (respuesta.ok) {
             let prenda = await respuesta.json();
-            document.querySelector(".titulo").innerHTML = `Prenda: ${prenda['id']}`;
+            document.querySelector(".titulo").innerHTML = `${prenda['prenda']} - ID: ${prenda['id']}`;
             // document.querySelector('#id').value = prenda['id'];
             document.querySelector('#prenda').value = prenda['prenda'];
             document.querySelector('#marca').value = prenda['marca'];
@@ -33,20 +32,17 @@ async function load() {
             document.querySelector('#acciones').innerHTML = `
             <button class="btnDelPrenda" id="${prenda['id']}">Borrar</button>
             <button class="btnUpdPrenda" id="${prenda['id']}">Actualizar</button><br><br><br>
-            <a href="ejemploPrendas.html">Regresar</a>
-            `;
+            <a href="ejemploPrendas.html">Regresar</a>`;
             let btnBorrar = document.querySelector('.btnDelPrenda');
             btnBorrar.addEventListener('click', async () => {
                 let id = btnBorrar.getAttribute('id');
                 if (await aServidor(id, 'D')) {
-                    document.querySelector('#acciones').innerHTML = `
-                <a href="ejemploPrendas.html">Regresar</a>
-                    `;
+                    document.querySelector('#acciones').innerHTML = `<a href="ejemploPrendas.html">Regresar</a>`;
                 }
             });
             let btnModificar = document.querySelector('.btnUpdPrenda');
             btnModificar.addEventListener('click', async () => {
-                let id = btnModificar.attributes['id'].value;
+                // let id = btnModificar.attributes['id'].value;
                 let renglon = {
                     "cantidad": 1,
                     "prendas": [
@@ -61,9 +57,7 @@ async function load() {
                     ]
                 }
                 if (await aServidor(renglon, 'U')) {
-                    document.querySelector('#acciones').innerHTML = `
-                <a href="ejemploPrendas.html">Regresar</a>
-                    `;
+                    document.querySelector('#acciones').innerHTML = `<a href="ejemploPrendas.html">Regresar</a>`;
                 }
             });
         } else {
@@ -82,10 +76,10 @@ async function aServidor(datos, accion) {
             respuesta = await fetch(`/indumenaria/${datos}`, {
                 method: 'DELETE'
             });
-            break;
+            break; 
         }
         case 'U': {     //ACTUALIZACION
-            respuesta = await fetch(`/prenda/${datos.prendas[0].id}`, {
+            respuesta = await fetch(`/indumentaria/${datos.prendas[0].id}`, {
                 method: 'PUT',
                 headers: { 'Content-type': 'application/json' },
                 body: JSON.stringify(datos)
